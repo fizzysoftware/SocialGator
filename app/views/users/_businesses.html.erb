@@ -1,0 +1,85 @@
+<section class="row content">
+<div class="twelve column clearfix">
+  <% if businesses.any? %>
+        <% businesses.each do |business| %>
+        <div class="busprofile">
+            <div class="bushead">
+                <div class="showlogo">                   
+                    <%= link_to image_tag(business.photo.url(:thumb)),scheduled_posts_path(@user, business) %>
+                </div>
+                <h1><a href="<%= scheduled_posts_path(@user, business) %>"><%= business.business_name %></a></h1>
+                <!--<h5 ><%#= business.description %></h5>-->
+                <ul class="connectedservices">
+                    <% if business.facebook_page_id.blank? %>
+                        <a href="<%= social_profile_path(current_user, business)%>" title = "facebook page not connected">
+                            <li class="facebookconnect_hover" >Facebook</li>
+                        </a>  
+                    <% else %>
+                        <a href="<%= social_profile_path(current_user, business)%>" title = "facebook page connected">
+                            <li class="facebookconnect">Facebook</li>
+                        </a>  
+                    <% end %>    
+
+                    <% if business.twitter_token.blank? %>
+                        <a href="<%= social_profile_path(current_user, business)%>" title = "twitter page not connected">
+                            <li class="twitterconnect_hover">Twitter</li>   
+                        </a>    
+                    <% else %>
+                        <a href="<%= social_profile_path(current_user, business)%>" title = "twitter page connected">
+                            <li class="twitterconnect">Twitter</li>
+                        </a>    
+                    <% end %>  
+                </ul>
+            	<%= link_to "Manage", scheduled_posts_path(@user, business), class: "button nice small white radius cornerbtn" %>
+        	</div>
+        	
+            <div class="content_list clearfix dashpad"> 
+                <% @business = business.scheduled_posts.find(:all,:conditions => ['archived =? and publish_date >?',false,Time.now + Time.zone_offset(Time.now.zone)],:order => "publish_date") %>  
+                <% if @business.count != 0 %>             
+                    <% @business.each_with_index do |schedule_post,index| %>
+                        <div class="textual">
+                            <div class="box" id = "box_<%= schedule_post.id %>">
+                                <%= link_to 'x', [@user, business, schedule_post], confirm: "Are you sure", method: :delete, class: "delete_button",:title => "Delete this Post" %>
+                                <span class="label white time"><%= schedule_post.publish_date.strftime("%d-%m-%y %H:%M") %></span>
+                            
+                                <% if schedule_post.post_type == "text" %>
+                                    <h3><%= link_to schedule_post.title, schedule_post.link,:class => "post_link", :target => "_blank"%></h3>
+                                    <p class="snippet"><%= schedule_post.content %></p>
+                                <% else %>    
+                                    <div class="img_wrap">
+                                        <%= image_tag schedule_post.thumbnail_url, class: "thumbnail" %>
+                                    </div>
+                                    <a href="<%= schedule_post.link %>", class="post_link", target="_blank"><h6><%= schedule_post.title %></h6></a>
+                                <% end %>
+                            
+                                <%= link_to "Edit", edit_user_business_scheduled_post_path(@user, business, schedule_post), class: "small button white nice centered schedule_post edit_scheduled_post radius" %>
+
+                                <%= link_to_function ' ', "mark_as_archived(#{schedule_post.id})",:id => "archived_#{schedule_post.id}" , :class => "archive",:title => "Post and Archive" %><br>
+                           
+                                <% if schedule_post.starred == false %>
+                                    <%= link_to_function '', "mark_as_starred(#{schedule_post.id})",:id => "starred_#{schedule_post.id}",:class=>"small_star",:title => "Mark as Starred" %><br>
+                                
+                                <% else %>
+                                    <%= link_to_function '', "mark_as_starred(#{schedule_post.id})",:id => "starred_#{schedule_post.id}",:class=>"small_star_active",:title => "Remove from Starred" %>
+                                <% end %>
+                            </div><!--box-->
+                        </div><!--textual-->
+                        <%#= index%>
+
+                        <div class="reveal-modal" id = "edit_post_<%= schedule_post.id%>">
+                        
+                        </div>   
+
+                        <% break if index == 3 %>
+                    <% end %> 
+                
+                <% else %>
+                    <h4><i style = "color:#666;">No post is scheduled.</i><h4/>
+                <% end %>   
+            </div>
+        	
+        </div>    
+        <% end %>
+      <% end %>
+    </div>
+</section>

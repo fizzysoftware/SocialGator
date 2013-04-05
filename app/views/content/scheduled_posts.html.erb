@@ -1,0 +1,62 @@
+<% content_for :title, "#{@business.business_name}" %>
+<%= render "shared/content_page_header" %>
+	  <ul class="nice tabs-content contained">
+		<li class="active" id="nice1Tab">
+		   <dl class="sub-nav post_type">
+			  <dt><strong>Post type:</strong></dt>
+			  <dd id="text" class="text active"><%= link_to "Text", scheduled_posts_path(@user, @business, post_type: "text") %></dd>
+			  <dd id="image" class="image"><%= link_to "Image", scheduled_posts_path(@user, @business, post_type: "image") %></dd>
+			  <dd id="video" class="video"><%= link_to "Video", scheduled_posts_path(@user, @business, post_type: "video") %></dd>
+			  <dd id="archived" class="archived"><%= link_to "Archived", scheduled_posts_path(@user, @business, post_type: "archived") %></dd>
+			  <dd id="starred" class="starred"><%= link_to "Starred", scheduled_posts_path(@user, @business, post_type: "starred") %></dd>
+			 
+			</dl>
+			
+			
+		   <div class="content_wrap row scheduled_text_posts">
+			 <%= render "scheduled_text_posts" %>
+		   </div><!--content_wrap-->
+		   
+			<div class="content_wrap row scheduled_image_posts" style="display: none">
+			  <%= render "scheduled_image_posts" %>
+			</div><!--content_wrap-->
+			
+			<div class="content_wrap row scheduled_video_posts" style="display: none">
+			  <%= render "scheduled_video_posts" %>
+			</div><!--content_wrap-->
+
+			<div class="content_wrap row scheduled_archived_posts" style="display: none">
+			  <%= render "scheduled_archived_posts" %>
+			</div><!--content_wrap-->
+
+			<div class="content_wrap row scheduled_starred_posts" style="display: none">
+			  <%= render "scheduled_starred_posts" %>
+			</div><!--content_wrap-->
+		  
+		</li>
+	   
+	  </ul>
+	</div><!--content_box-->
+	</div><!--wrapper-->
+
+</section><!--container-->
+
+<div id="new_content_modal" class="reveal-modal">
+  <%= render "new_scheduled_post_modal" %>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<script>
+$(function()  {
+  $(".post_type a").click(function()  {
+	var type = $(this).parents("dd").attr("id")
+	var class_name = "scheduled_" + type + "_posts" 
+	$(".content_wrap").slideUp();
+	$(".content_wrap." + class_name).slideDown();
+	
+	$(this).parents("dl").find(".active").removeClass("active")
+	$(this).parents("dd").addClass("active")
+	return false;
+  })
+})
+</script>

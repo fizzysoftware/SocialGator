@@ -1,0 +1,63 @@
+<% content_for :title, "Text Posts" %>
+<%= render "schedule_modal" %>
+<%= render "shared/content_page_header" %>
+      <ul class="nice tabs-content contained textual poll_text">
+        <li class="active" id="nice1Tab">
+          <dl class="sub-nav content_sources">
+            <dt><strong>Sources:</strong></dt>
+            <dd id="google_news" class="google_news active"><%= link_to "Google News", textual_post_path(@user, @business, source: :google_news), remote: true %></dd>
+            <dd  id="topsy" class="topsy"><%= link_to "Topsy (Trending Now)", textual_post_path(@user, @business, source: :topsy), remote: true %></dd>
+            <dd  id="quora" class="quora"><%= link_to "Quora", textual_post_path(@user, @business, source: :quora), remote: true %></dd>
+          </dl>       
+          <div class="content_wrap">
+            <%= render "posts" %>
+          </div><!--content_wrap-->        
+        </li><!--active_tab-->
+      </ul>
+    </div><!--content_box-->
+    </div><!--wrapper-->
+
+</section><!--container-->
+
+<div id="new_content_modal" class="reveal-modal">
+  <%= render "new_scheduled_post_modal" %>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+<script>
+
+
+$(".content_sources a").click(function()  {
+  $(".content_sources").find(".active").removeClass("active")
+  $(this).parent().addClass("active")
+  window.content_source = $(".content_sources").find(".active").attr("id")
+})
+
+$(function()  {
+  $(".schedule_post").live("click", function()  {
+    $box = $(this).parent()
+    $(".post_sources li a").addClass("selected")
+    title = $box.find("h3").text()
+    link = $box.find(".post_link").attr("href")
+    snippet = $box.find("p.snippet").text()
+    $("#title").val(title).height("70px")
+    $("#link").val(link)
+    $("#snippet").val(snippet).height("70px")
+    $("#post_type").val("text")
+    $("#image_placeholder, #thumbnail_url, #embed_url, #video_placeholder").hide()
+    $("#schedule_modal").reveal()
+  })
+
+  $(".post_now").click(function() {
+    var selected = $(".post_sources li a.selected").length
+    if(selected == 2 || selected == 0) {
+      $(this).attr("href", ("textual/post_now/?content=" + title + "&link=" + link + "&publish_sources=all" ))
+      $("#publish_sources").val("all")
+    } else  {
+      var sel_elem = $(".post_sources li a.selected").text()
+      $("#publish_sources").val(sel_elem)
+      $(this).attr("href", ("textual/post_now/?content=" + title + "&link=" + link + "&publish_sources=" + sel_elem.toLowerCase()))
+    }
+  })
+  
+})
+</script>

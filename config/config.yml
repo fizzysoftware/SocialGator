@@ -1,0 +1,12 @@
+development:
+    FB_SECRET : '9bf39830a5c90603290c10456e108133'
+    FB_APP_ID : '365156053555144'
+    url : 'http://localhost:3000'
+    tw_consumer_key : 'XNCuRTmA7cBI5ecPFePV6A' 
+    tw_consumer_secret : 'UbxbqtOCVBMjuPX1riRtwMI2VdQfJW2btACdZJvY'
+production:
+    FB_SECRET : '7cec5d127297099bfd204ffe3138b235'
+    FB_APP_ID : '390046674402928'
+    url: 'http://social.deskgator.com'
+    tw_consumer_key : 'XNCuRTmA7cBI5ecPFePV6A' 
+    tw_consumer_secret : 'UbxbqtOCVBMjuPX1riRtwMI2VdQfJW2btACdZJvY'

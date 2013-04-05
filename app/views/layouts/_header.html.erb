@@ -1,0 +1,55 @@
+<header class="container top_bar">  
+    <div class="row">
+        <a href="<%= root_path %>" id="logo" class="two columns left"><h1 class="sitelogo">SocialGator</h1></a>
+      
+        <% if signed_in? %>
+            <ul class="left nav-bar hide-on-mobiles">
+                <li><%= link_to "Publish", user_path(current_user), class: "main margin_left" %></li>
+                <li><%#= link_to "Build", comingsoon_path, class: "main" %></li>
+                <li><%#= link_to "Analytics", comingsoon_path, class: "main" %></li>
+            </ul><!--right-->
+        <% end %>
+      
+        <ul class="right nav-bar hide-on-mobiles">
+            <% unless signed_in? %>
+            <li><%= link_to "Login", login_path, class: "main" %></li>
+            <li><%= link_to "Signup", signup_path, class: "main light" %></li>
+        </ul><!--right-->
+        
+            <% else %>
+                <% unless controller.controller_name == "businesses" %>
+                    <% if current_user.businesses.any? %>
+                        <li class="has-flyout">
+                            <a href="#" class="main">Businesses</a>
+                            <a href="#" class="flyout-toggle"><span></span></a>
+                            <div class="flyout">
+                                <ul class="actions">
+                                    <% current_user.businesses.each do |business| %>
+                                        <li><%= link_to business.business_name, scheduled_posts_path(current_user, business), class: "" %></li>
+                                    <% end %>
+                                    <li><%= link_to "+ Add Business", new_user_business_path(current_user), class: "" %></li>
+                                </ul>
+                            </div>
+                        </li>
+
+                    <% end %>
+            <% end %>
+
+            <li class="has-flyout">
+                <%= link_to current_user.username.humanize, user_path(current_user), class: "main" %>
+                <a href="#" class="flyout-toggle"><span></span></a>
+                <div class="flyout">
+                    <ul class="actions">
+                        <li><%= link_to "Edit Profile", edit_user_path(current_user), class: "" %></li>
+                        <li><%= link_to "Logout", logout_path, class: "" %></li>
+                    </ul>
+                </div>
+            </li>
+        </ul><!--right-->
+      <% end %>
+    </div><!--row-->
+
+    <div class ="fork">
+        <%= link_to image_tag('fork.png'),  'https://github.com/fizzysoftware/SocialGator',:target => '_blank' %>
+    </div>
+</header><!--top-bar-->

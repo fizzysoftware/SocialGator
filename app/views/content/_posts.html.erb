@@ -1,0 +1,20 @@
+ <% if @content.any? %>
+    <div class="content_list clearfix">
+      <% @content.each do |post| %>
+        <div class="box text_post">
+          <span class="white label radius"><%= post.keyword %></span>
+          <a href="<%= post.link %>", class="post_link", target="_blank"><h3><%= truncate(post.title, length: 150) %></h3></a>
+          
+          <p class="snippet"><%= post.snippet %></p>
+          <%= link_to "Schedule", "#", class: "small button white nice centered schedule_post radius" %>
+        </div><!--box-->
+      <% end %>
+    </div><!--content_list-->
+    <% else %>
+      <div class="no_posts clearfix">
+        <h2>Content is loading. Please wait...</h2>
+      </div>
+    <% end %>
+    
+    
+    

@@ -1,0 +1,35 @@
+<footer class="container main_footer">
+    <div class="row">
+      <div class="columns">
+        <ul>
+          <li class="heading"><strong>SocialGator</strong></li>
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "About", about_path %></li>
+          <li><%= link_to "FAQs", faq_path %></li>
+          <li><%= link_to "Contact Us", contact_path %></li>
+        </ul>
+      </div><!--two columns-->
+      
+      <div class="columns">
+        <ul>
+          <li class="heading"><strong>Links</strong></li>
+          <li><%= link_to "Terms", toc_path %></li>
+          <li><%= link_to "Privacy", privacy_path %></li>
+          <li><%= link_to "Disclaimer", "#" %></li>
+        </ul>
+      </div><!--two columns-->
+      
+      <div class="columns">
+        <ul>
+          <li class="heading"><strong>Social</strong></li>      
+          <li><%= link_to "Facebook", "#" %></li>
+          <li><%= link_to "Twitter", "#" %></li>
+          <li><%= link_to "Google Plus", "#" %></li>
+        </ul>
+      </div><!--two columns-->
+      
+      <div class="three columns offset-by-three">
+        <%= link_to image_tag("fizzy_logo.png"), "http://www.fizzysoftware.com",:target => "_blank" %>
+      </div><!--two columns-->    
+    </div><!--row-->
+</footer><!--footer-->

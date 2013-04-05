@@ -1,0 +1,15 @@
+<div class="fields select_time">
+  <div class="clearfix select_time_inner">
+    <%= f.hidden_field :time, class: "input-text large post_time_field" %>
+    <div class="select_wrap">
+      <%= label_tag "Hours" %>
+      <%= select_hour(0) %>
+    </div><!--select_wrap-->
+	
+    <div class="select_wrap">
+      <%= label_tag "Minutes " %>
+      <%= select_minute(0) %>
+    </div><!--select_wrap-->
+</div>
+ <%= link_to_remove_fields("Remove Schedule", f) %>
+</div><!--fields-->

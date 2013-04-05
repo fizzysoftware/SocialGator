@@ -1,0 +1,28 @@
+<% if @scheduled_archived_posts.any? %>
+    <div class="content_list clearfix">
+       <% @scheduled_starred_posts.each do |post| %>
+            <div class="textual">
+                <div class="box">
+                    <%= link_to 'x', [@user, @business, post], confirm: "Are you sure", method: :delete, class: "delete_button",:title => "Delete this Post" %>
+                    <span class="label white time"><%= post.publish_date.strftime("%d-%m-%y %H:%M") if !post.publish_date.nil? %></span>
+
+                    <% if post.post_type == "text" %>
+                        <a href="<%= post.link %>", class="post_link", target="_blank"><h3><%= post.title %></h3></a>
+                        <p class="snippet"><%= post.content %></p>
+                    <% else %>    
+                        <div class="img_wrap",style = "border:0px;">
+                            <%= image_tag post.embed_url, class: "thumbnail" %>
+                        </div>
+                        <a href="<%= post.link %>", class="post_link", target="_blank"><h6><%= post.title %></h6></a>
+                    <% end %>
+
+              <%= link_to "Edit", edit_user_business_scheduled_post_path(@user, @business, post), class: "small button white nice centered schedule_post edit_scheduled_post radius" %>
+           </div><!--box-->
+          </div><!--textual-->
+      <% end %>
+    </div><!--content_list-->
+<% else %>
+      <div class="no_posts clearfix">
+        <h2>No scheduled posts.</h2>
+      </div>
+<% end %>

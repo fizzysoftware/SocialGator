@@ -1,0 +1,62 @@
+<% content_for :title, "Image Posts" %>
+<%= render "schedule_modal" %>
+<%= render "shared/content_page_header" %>
+      <ul class="nice tabs-content contained textual textual poll_images">
+        <li class="active" id="nice1Tab">
+               <dl class="sub-nav content_sources">
+                  <dt><strong>Sources:</strong></dt>
+                  <dd id="pinterest" class="active pinterest"><%= link_to "Pinterest", image_post_path(@user, @business, source: :pinterest), remote: true %></dd>
+                  <dd id="flickr" class="flickr"><%= link_to "Flickr", image_post_path(@user, @business, source: :flickr), remote: true %></dd>
+                  
+                </dl>
+                <div class="content_wrap">
+                  <%= render "images" %>
+                </div><!--content_wrap-->         
+        </li><!--active_tab-->   
+      </ul>
+    </div><!--content_box-->
+    </div><!--wrapper-->
+
+</section><!--container-->
+
+<div id="new_content_modal" class="reveal-modal">
+  <%= render "new_scheduled_post_modal" %>
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<script>
+$(".content_sources a").click(function()  {
+  $(".content_sources").find(".active").removeClass("active")
+  $(this).parent().addClass("active")
+  window.content_source = $(".content_sources").find(".active").attr("id")
+})
+
+$(".schedule_post").live("click", function()  {
+  $box = $(this).parent()
+  title = $box.find("h6").text()
+  link = $box.find(".post_link").attr("href")
+  embed_link = $box.find(".large_image_url").text()
+  $("#title").val(title).hide()
+  $("#link").val(link).hide()
+  $("#post_type").val("image")
+  $("#thumbnail_url, #embed_url, #video_placeholder").hide()
+  $("#snippet").attr("placeholder", "Add a caption")
+  $("#image_placeholder > img").attr("src", $box.find(".large_image_url").text())
+  $("#thumbnail_url").val($box.find(".thumbnail").attr("src"))
+  $("#embed_url").val($box.find(".large_image_url").text())
+  $("#schedule_modal").reveal()
+
+})
+
+$(".post_now").click(function() {
+    var selected = $(".post_sources li a.selected").length
+    if(selected == 2 || selected == 0) {
+      $(this).attr("href", ("textual/post_image_now/?content=" + title + "&link=" + link + "&publish_sources=all" + "&media_url=" + embed_link ))
+      $("#publish_sources").val("all")
+    } else  {
+      var sel_elem = $(".post_sources li a.selected").text()
+      $("#publish_sources").val(sel_elem)
+      $(this).attr("href", ("textual/post_image_now/?content=" + title + "&link=" + link + "&publish_sources=" + sel_elem.toLowerCase() + "&media_url=" + embed_link))
+    }
+  })
+</script>

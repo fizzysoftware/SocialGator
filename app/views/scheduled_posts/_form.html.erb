@@ -1,0 +1,114 @@
+<%= form_for([@user, @business, @scheduled_post], html: {class: "nice clearfix"}) do |f| %>
+  <h3>Edit Schedule Post</h3>
+  <%= render "shared/error_messages", object: f.object %>
+  
+   <dl class="sub-nav new_scheduled_post_type clearfix">
+      <dt><strong>Post type:</strong></dt>
+      <dd id="text" class="text active"><%= link_to "Text", "#" %></dd>
+      <dd id="image" class="image"><%= link_to "Image", "#" %></dd>
+      <dd id="video" class="video"><%= link_to "Video", "#" %></dd>
+     
+    </dl>
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title, class: "large input-text" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :link %>
+    <%= f.text_field :link, class: "large input-text" %>
+  </div>
+  
+  <div class="field">
+    <%= f.hidden_field :post_type, id: "type", class: "large input-text" %>
+  </div>
+  
+  <div class="field" id="embed_url">
+    <%= f.label :embed_url %>
+    <%= f.text_area :thumbnail_url, class: "large input-text" %>
+  </div>
+  
+  <div class="field" id="content">
+    <%= f.label :content %>
+    <%= f.text_area :content, class: "large input-text" %>
+  </div>
+  
+  
+  <div class="field publish">
+    <%= f.label :publish_date, class: "publishlabel" %>
+    <%= f.text_field :publish_date, class: "input-text ", id: "publish_date" %>
+  </div>
+
+  <span class="current_publish_time">Will publish on: <%= @scheduled_post.publish_date %> <%#= next_post_time(@business) %></span><%= link_to "Change publish time", "#", class: "change_publish_time button nice white radius right" %>
+ <div class="field topgutter">
+  <label for="help_text">Toggle Publish Sources</label>
+  <div class="row change_source">
+    <%= f.hidden_field :publish_sources, class: "seven columns input-text ", id: "publish_sources" %>
+    <ul class="post_sources">
+      <li class="selected"><div class="overlay"></div><a href="#" ><img class="socialimg" src="/assets/default_business.png"/></a></li>
+      <li class="selected"><div class="overlay twitter"></div><a href="#" ><img class="socialimg" src="/assets/default_business.png"></a></li>
+    </ul>
+  </div>
+  </div>
+  <div class="actions eight column centered">
+    <br/>
+    <%= f.submit class: "button blue medium nice themebutton large radius" %>
+  </div>
+<% end %>
+
+<script>
+  $(function()  {
+    $(".publish").hide();
+    $(".change_publish_time").click(function()  {
+      $(".current_publish_time").hide();
+      $(".change_publish_time").hide();
+      $(".publish").show();
+    })
+
+    $('#publish_date').datetimepicker({
+      numberOfMonths: 1,
+      minDate: 0,
+      maxDate: 7,
+      stepHour: 3,
+      stepMinute: 15,
+      dateFormat: 'D dd, M yy -'
+    });
+
+
+
+    $(".new_scheduled_post_type a").click(function()  {
+      $(".new_scheduled_post_type").find(".active").removeClass("active")
+      var type = document.location.search.split("=")[1] || $(this).parent().attr("id")
+      $("#" + type).addClass("active")
+      
+      //$(".new_scheduled_post_type dd").addClass("active")
+      if(type === "text") {
+        $("#embed_url").hide()
+        $("#content").show()
+      } else if(type === "image") {
+        $("#content").find("label").text("Add a Caption")
+        $("#embed_url").show().find("textarea").height("20px")
+        $("#type").val(type)
+      } else {
+        $("#content").find("label").text("Add a Caption")
+        $("#embed_url").show().find("textarea").height("80px")
+        $("#type").val(type)
+      }
+    
+      return false;
+    })
+    
+    $(".new_scheduled_post_type a:first").trigger("click");
+    $('ul.post_sources li').each(function() {
+      $(this).click(function()  {
+        if($(this).hasClass("selected"))  {
+          $(this).removeClass("selected")
+        } else {
+          $(this).addClass("selected")
+        }
+        return false;
+      });
+    });
+  })
+  
+</script>

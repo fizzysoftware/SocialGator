@@ -1,0 +1,19 @@
+<% content_for :title, "Forgot Password" %>
+<section class="small_box container">
+    
+  <div class="row">
+    <div class="box seven theform columns centered">
+      <%= form_for(:password_reset, url: password_resets_path, method: :post, html: { class:"nice clearfix" }) do |f| %>
+      <h3>Reset Password</h3>
+      <div class="field">
+        <%= f.label :email, "Enter the email id that you used to signup" %>
+        <%= f.text_field :email, class: "large input-text", placeholder: "john@doe.com" %>
+      </div>
+
+      <div class="action">
+        <%= f.submit "Submit", class: "button blue medium nice themebutton large left radius"  %>
+      </div>
+    <% end %>
+    </div><!--six columns-->
+  </div><!--row-->
+</section><!--container-->

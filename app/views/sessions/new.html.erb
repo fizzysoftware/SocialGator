@@ -1,0 +1,28 @@
+<% content_for :title, "Login with SocialGator" %>
+<section class="small_box container">
+    
+  <div class="row">
+    <div class="box seven theform columns centered">
+      <%#= render "shared/notifications" %>
+      <%= form_for(:sessions, url: sessions_path, html: { class:"nice clearfix" }) do |f| %>
+      <h3>Login<span class="subhead"><%= link_to "Don't have an account? Signup now!", signup_path %></span></h3>
+        <div class="field">
+          <%= f.label :email %>
+          <%= f.text_field :email, class: "large input-text", placeholder: "john@doe.com" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :password %>
+          <%= f.password_field :password, class: "large input-text", placeholder: "Secret password" %>
+        </div>
+
+        <div class="action">
+          <%= f.submit "Sign in", class: "button blue medium themebutton nice large left radius"  %>
+          <%= link_to "Forgot password?", new_password_reset_path, class: "forgotten_password five columns right" %>
+        </div>
+
+      <% end %>
+      
+    </div><!--six columns-->
+  </div><!--row-->
+</section><!--container-->

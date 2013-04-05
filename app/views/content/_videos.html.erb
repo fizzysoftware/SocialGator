@@ -1,0 +1,31 @@
+<% if @content.any? %>
+   <div class="content_list clearfix">
+     <p class="row hide-on-mobiles"><span class="helper_text right">Larger images being processed. Please sit tight.</span></p>
+     <% @content.each do |video| %>
+       <div class="box text_post">
+       <div class="img_wrap">
+        <%= image_tag video.thumbnail_url, class: "video_thumbnail twelve columns" %>
+		</div>
+         <span class="video_embed_url" style="display: none;"><%= video.embed_url.gsub("oembed","oembed&wmode=opaque")%></span>
+         <a href="<%= video.link %>", class="post_link", target="_blank"><h6><%= video.title %></h6></a>
+         <%= link_to "Schedule", "#", class: "small button white nice centered schedule_post radius" %>       
+       </div><!--box-->
+     <% end %>
+   </div><!--content_list-->
+   <% else %>
+     <div class="no_posts clearfix">
+       <h2>Content is loading. Please wait...</h2>
+     </div>
+   <% end %>
+
+   <div id="video_reveal" class="reveal-modal" style="display: none">
+        <a class="close-reveal-modal">&#215;</a>
+   </div>
+   
+<script>
+  $(function()  {
+    if(window.counter > 5 || $(".box").length > 20)  {
+      $(".helper_text").text("Click on the thumbnails to reveal video.")
+    }      
+  })
+</script>

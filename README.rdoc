@@ -1,0 +1,15 @@
+== Welcome to SocialGator
+
+== How to run this application
+
+1. First step:
+       <tt>rvmsudo bundle install</tt>
+
+2. Second Step:
+       <tt> rake db:create; rake db:migrate; rake db:seed; rails s </tt>
+
+3. Third step
+		<tt> open another terminal and run rake jobs:work </tt>
+
+4. Go to http://localhost:3000/ to see the app.
+   

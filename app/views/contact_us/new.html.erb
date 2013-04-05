@@ -1,0 +1,47 @@
+<% content_for :title, "Contact Us" %>
+<!-- <div class="row">
+	<div class="span12">
+		<%#= render 'form' %>
+	</div>
+</div> -->
+
+<section class="small_box container add_business">
+  <div class="row">
+    <div class="box seven theform columns centered">
+      <% provide(:box_title, "Contact Us") %>
+      <%= form_for @contact_u, :html => {:class => 'nice'} do |f| %>
+  <h3><%= yield(:box_title)%></h3>
+
+  <div class="field ">
+			<%= f.label :email, :class => "standardNiceInput" %>
+			<%= f.email_field :email, :placeholder=>'you@example.com', :required=>'required', :class=>'input-text large' %>
+		</div>
+	
+		<div class="field  ">
+				<%= f.label :phone_number, 'Phone', :class => "standardNiceInput" %>
+				<%= f.text_field :phone_number, :placeholder=>'10 digit mobile number', :required=>'required', :class=>'input-text large' %>
+		</div>
+	
+	
+	<div class="row">
+		<div class="field ">
+  			<%= f.label :related_to, 'Subject', :class => "standardNiceInput" %>
+  			<%= f.text_field :related_to, :placeholder=>'Query/Feedback', :required=>'required', :class=>'input-text large' %>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="field ">
+	  		<%= f.label :message, :class => "inlineNiceTextarea" %>
+	  		<%= f.text_area :message, :placeholder=>'Something you like to share with us', :required=>'required', :class=>'medium input-text large' %>
+		</div>
+	</div>
+	<div class="field">
+  		<%= f.submit 'Submit', :class=>'button themebutton small radius nice' %>
+	</div>
+<% end %>
+
+
+    </div><!--six columns-->
+  </div><!--row-->
+</section><!--container-->

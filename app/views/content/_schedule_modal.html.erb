@@ -1,0 +1,95 @@
+<div id="schedule_modal" class="small_box reveal-modal">
+  <div class="row">
+  <h2>Schedule New Post</h2>
+  <p>Click to edit</p>
+  <%= form_for([@user, @business, @scheduled_post], html: {class: "nice ten columns centered"}) do |f| %>
+    
+    <div class="field">
+      <%= f.text_area :title, id: "title", class: "large input-text" %>
+    </div>
+    <div class="field">
+      <%= f.text_field :link, id: "link", class: "large input-text disabled" %>
+    </div>
+    
+    <div class="field">
+      <%= f.hidden_field :thumbnail_url, id: "thumbnail_url", class: "large input-text" %>
+    </div>
+    
+    <div class="field">
+      <%= f.hidden_field :post_type, id: "post_type", class: "large input-text" %>
+    </div>
+      
+    <div class="field">
+      <%= f.hidden_field :embed_url, id: "embed_url", class: "large input-text" %>
+    </div>
+    
+    <div class="field" id="image_placeholder">
+      <img src="" class="ten columns"/>
+    </div>
+    
+    <div class="field flex-video" id="video_placeholder">
+      
+    </div>
+    
+    <div class="field">
+      <%= f.text_area :content, id: "snippet", class: "large input-text" %>
+    </div>
+
+    <div class="field publish">
+      <%= f.label :publish_date, class: "publishlabel" %>
+      <%= f.text_field :publish_date, class: "input-text ", id: "publish_date" %>
+    </div>
+
+    <div class="row">
+      <span class="current_publish_time">Post will be publish on: <%= next_post_time(@business) %></span><%= link_to "Change publish time", "#", class: "change_publish_time button nice radius white right" %>
+    </div>
+    
+    <div class="field topgutter">
+        <label for="help_text">Toggle Publish Sources</label>
+        <div class="row change_source">
+            <%= f.hidden_field :publish_sources, class: "seven columns input-text ", id: "publish_sources" %>
+            <ul class="post_sources">
+                <li class="selected"><div class="overlay"></div><a href="#" ><img class="socialimg" src="/assets/default_business.png"/></a></li>
+                <li class="selected"><div class="overlay twitter"></div><a href="#" ><img class="socialimg" src="/assets/default_business.png"></a></li>
+            </ul>
+        </div>
+    </div>   
+    <div class="actions four columns centered">
+        <%= f.submit "Schedule", class: "button themebutton nice medium radius" %> <span>
+    </div>
+  <% end %>
+  </div><!--row-->
+  <a class="close-reveal-modal">&#215;</a>
+</div>
+
+<script>
+  jQuery(document).ready(function($) {
+    
+    $(".publish").hide();
+    $(".change_publish_time").click(function()  {
+      $(".publish, .current_publish_time").slideToggle();
+      $(".change_publish_time").hide();
+    })
+
+    $('#publish_date').datetimepicker({
+      numberOfMonths: 1,
+      minDate: 0,
+      maxDate: 7,
+      stepHour: 1,
+      stepMinute: 15,
+      dateFormat: 'D dd, M yy -'
+    });
+    
+
+    $('ul.post_sources li').each(function() {
+      $(this).click(function()  {
+        if($(this).hasClass("selected"))  {
+          $(this).removeClass("selected")
+        } else {
+          $(this).addClass("selected")
+        }
+        return false;
+      })
+    })
+  });
+</script>

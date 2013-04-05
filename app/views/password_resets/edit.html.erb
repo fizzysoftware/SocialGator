@@ -1,0 +1,25 @@
+<% content_for :title, "Reset your Password" %>
+<section class="small_box container">
+    
+  <div class="row">
+    <div class="box seven the form columns centered">
+
+    <%= form_for @user, :url => password_reset_path(params[:id]), html: { class:"nice clearfix" } do |f| %>
+      <%= render "shared/error_messages", object: f.object %>
+      <div class="field">
+        <%= f.label :password, "Enter your new password" %>
+        <%= f.password_field :password, class: "large input-text" %>
+      </div>
+      <div class="field">
+        <%= f.label :password_confirmation, "Enter password again." %>
+        <%= f.password_field :password_confirmation, class: "large input-text" %>
+      </div>
+      
+      <div class="action">
+         <%= f.submit "Update", class: "button blue medium nice themebutton large right radius" %>
+       </div>
+       
+    <% end %>
+    </div><!--six columns-->
+  </div><!--row-->
+</section><!--container-->

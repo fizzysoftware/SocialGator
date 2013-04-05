@@ -1,0 +1,66 @@
+<% content_for :title, "Curated Content To Manage Your Social Media Profile" %>
+<section class="subheadwrap">
+ 	<div class="subhead">
+      	<h3><span class="bolder"><%= @user.username %></span>, your scheduled posts are listed below.</h3>
+      	<div class="panelnav">
+            <% if @user.facebook_pages.blank? %>
+                <%= link_to "+  Add Business", social_accounts_path(@user), class: "button small white nice radius right" %>
+            <% else %>
+                <%= link_to "+  Add Business", new_user_business_path(@user), class: "button small white nice radius right" %>
+            <% end %>
+      	</div>
+  	</div><!--row-->
+</section><!--user container-->
+
+<%= render 'businesses', :businesses => @businesses %>
+ 
+<script>
+function mark_as_starred(schedule_post_id)
+{
+  $.ajax( 
+    { 
+      dataType: "json", 
+      cache: false, 
+      type: 'post', 
+      url: '/scheduled_posts/mark_as_starred?id='+schedule_post_id, 
+      success: function(data) 
+      { 
+        if(data.name == "true")
+        { 
+          $("#starred_"+schedule_post_id).removeClass('small_star').addClass('small_star_active');
+          $("#notice").show();
+          $('#notice').html("This post has been starred.").delay(5000).fadeOut(500);
+          
+        }
+        else if(data.name == "false")
+        { 
+          $("#starred_"+schedule_post_id).removeClass('small_star_active').addClass('small_star');
+          $("#notice").show();
+          $('#notice').html("This post has been unstarred.").delay(5000).fadeOut(500);
+          
+        }
+      } 
+    });
+}
+
+function mark_as_archived(schedule_post_id)
+{
+  $.ajax( 
+    { 
+      dataType: "json", 
+      cache: false, 
+      type: 'post', 
+      url: '/scheduled_posts/mark_as_archived?id='+schedule_post_id, 
+      success: function(data) 
+      { 
+        if(data.name == "true")
+        { 
+          $("#box_"+schedule_post_id).hide();
+          $("#notice").show();
+          $('#notice').html("This post has been archived.").delay(5000).fadeOut(500);
+          
+        }
+      } 
+    });
+}
+</script>

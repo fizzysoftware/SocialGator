@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
+  <title>SocialGator | <%=h yield(:title) || "Curated Content To Manage Your Social Media Profile" %></title>
+    <meta name="author" content="FizzySoftware" />
+	<meta name="keywords" content="social media, twitter, facebook, curated content, manage profile, manage social media accounts, social media analysis">
+	<meta name="description" content="SocialGator provides you with curated content to manage, engage and analyze your social media profiles.">
+	
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:600,400,700' rel='stylesheet' type='text/css'>
+  
+    <%= javascript_include_tag "application" %>
+    <%= csrf_meta_tags %>
+    <%= stylesheet_link_tag "application", :media => "screen" %>
+</head>
+<body>
+  <div id='notice' style="<%= 'display: none; ' if flash[:notice].blank? %> text-align: center;"><%= flash[:notice].html_safe  unless flash[:notice].blank? %></div>
+ 
+  <div id='error' style="<%= 'display: none;' if flash[:error].blank? %>  text-align: center;"><%= flash[:error].html_safe  unless flash[:error].blank? %></div>
+
+  <%= render 'layouts/header'%>
+  
+  <%= yield %>
+
+  <%= render 'layouts/footer'%>
+
+</body>
+<script>
+$(function(){
+  $('#notice').delay(3000).slideUp(200);
+  $('#error').delay(3000).slideUp(200);
+});
+</script>
+</html>

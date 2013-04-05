@@ -1,0 +1,44 @@
+   <h3>Edit your profile</h3>
+  <%= form_for(@user, html: { class: "nice clearfix" }) do |f| %>
+    
+    <%= render "shared/error_messages", object: f.object %>
+
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, class: "large input-text", placeholder: "John" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :username %>
+      <%= f.text_field :username, class: "large input-text" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.text_field :email, class: "input-text large", placeholder: "john@doe.com" %>
+    </div>
+
+    <div class="field" >
+      <%= f.label :dob, "Date of Birth" %>
+      <%= f.date_select :dob, :start_year => 1950, :order => [:day, :month, :year] %>
+    </div>
+
+    <div class="">
+      <%= f.label :country %>
+      <%= country_select "user", "country" , nil, {}, {:class => 'select_width'} %>
+    </div>
+
+    <div class="field">
+      <%= f.label :timezone %>
+      <%= f.time_zone_select :timezone , nil, {}, {:class => 'select_width'}%>
+    </div>
+ 
+    <div class='field'>
+        <%= f.label :password, 'Password' %>
+        <%= link_to "Change Password",{:controller => 'users',:action => 'change_password',:id=> @user.id }, :class=>'button medium rounded white'%>
+    </div>
+
+    <div class="action">
+      <%= f.submit "Update profile", class: "button blue medium nice themebutton large center radius" %>
+    </div>
+  <% end %>

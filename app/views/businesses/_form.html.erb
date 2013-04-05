@@ -1,0 +1,60 @@
+<%= form_for([@user, @business], html: {class: "nice business_form clearfix"}) do |f| %>
+  <h3><%= yield(:box_title)%></h3>
+  <%= render "shared/error_messages", object: f.object %>
+
+  <div class="field">
+    <%= f.label :business_name %>
+    <%= f.text_field :business_name, class: "large input-text" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "large input-text" %>
+  </div>
+
+   <div class="field">
+    <%= f.label :photo, "Cover Photo" %>
+    <%= f.file_field :photo %>
+  </div>
+
+ <div class="block keywords_block clearfix">
+    <%= f.label :keywords %>
+    <%= f.fields_for :keywords do |keyword_form| %>
+        <%= render "keyword", :f => keyword_form %>  
+    <% end %>
+   
+   <%= link_to_add_fields("+", f, :keywords) %>
+  </div><!--block-->
+
+  <div class="field">
+    <%= f.label :facebook_page, "Facebook Page" %>
+    <%= f.select("facebook_page_id", current_user.facebook_pages.collect {|page| [ page.facebook_page_name, page.id ] }, {:prompt => 'Select Facebook Page'},{:class => 'select_width'}) %>
+  </div>
+
+  <div class="actions eight columns centered">
+    <%= f.submit "Save And Continue", class: "button themebutton large radius nice" %>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  $(function()  {
+    $(".business_form").submit(function() {
+      var keywords = $("#keyword_field").val().split(", ");
+      
+      for(var key in keywords)  {
+        $(".keywords_block").find(".keyword_hidden:last").val(keywords[key]);
+        $(".keywords_block").find(".add_fields").trigger("click");
+      }
+    })
+  })
+
+  $(".keywords_block .remove_field").hide();
+  $('.keywords_block a.add_fields').live('click',function(){
+
+       $('.keywords_block a.remove_field').show();
+       $('.keywords_block .twelve:last   a.remove_field').hide();
+
+  });
+
+
+</script>

@@ -1,0 +1,82 @@
+<div id="business_modal" class="reveal-modal">
+  <h2>Switch businesses profile</h2>
+  <% if @user.businesses.any? %>
+    <ul class="switch_business_list">
+      <% @user.businesses.each do |business| %>
+        <li>
+        <%= link_to (image_tag(business.photo.url(:medium), class:'chooseimage') + business.business_name + "<span class='thin'>( Facebook, Twitter )</span>".html_safe), textual_post_path(@user, business) %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <a class="close-reveal-modal">&#215;</a>
+</div><!--modal-->
+
+<div class="container current_business sectionpanel">
+  <div class="row">
+    <div class="wrapper twelve columns">
+      <div class="twelve columns">
+      		<div class="logowrap">
+                <%= image_tag(@business.photo.url(:medium))%>
+      		</div>
+        	<h5 class="businessname"><%= @business.business_name %></h5>
+        	<ul class="connectedservices">
+            <% if @business.facebook_page_id.blank? %>
+                <a href="<%= social_profile_path(current_user, @business)%>" title = "facebook page not connected">
+                  <li class="facebookconnect_hover" >Facebook</li>
+                </a>  
+            <% else %>
+                <a href="<%= social_profile_path(current_user, @business)%>" title = "facebook page connected">
+                  <li class="facebookconnect">Facebook</li>
+                </a>  
+            <% end %>    
+
+            <% if @business.twitter_token.blank? %>
+        		<a href="<%= social_profile_path(current_user, @business)%>" title = "twitter page not connected">
+                    <li class="twitterconnect_hover">Twitter</li>	
+                </a>    
+            <% else %>
+                <a href="<%= social_profile_path(current_user, @business)%>" title = "twitter page connected">
+                    <li class="twitterconnect">Twitter</li>
+                </a>    
+            <% end %>  
+
+        	</ul>
+        	<h6 class="keywords">
+        	  <% if @business.keywords.any? %>
+              <strong> Keywords : 
+                <% @business.keywords.each do |k| %>
+                  <span class='key'><%= k.token %></span>
+                <% end %>
+              </strong>
+            <% end %></h6>
+        </div>
+
+        <div class="links panelnav clearfix">
+          <%= link_to "Edit Business", edit_user_business_path(@user, @business), class: "button small white radius nice right" %>
+        </div>
+      </div><!--panel-->
+      </div><!--wrapper-->
+    </div><!--row-->
+</div><!--container-->
+
+
+<script>
+  $(document).ready(function() {
+    $('.show_content_modal').click(function() {
+      $('#new_content_modal').reveal();
+      return false;
+    });
+  });
+</script>
+
+
+<section class="container content">  
+    <div class="content_box row">
+      <dl class="nice contained tabs">
+  			<%= nav_link "Scheduled", scheduled_posts_path(@user, @business) %>
+  			<%= nav_link "Text", textual_post_path(@user, @business) %>
+  			<%= nav_link "Images", image_post_path(@user, @business) %>
+  			<%= nav_link "Videos", video_post_path(@user, @business) %>
+  			<%= link_to "+ Add custom post", "#", class: "button nice right themebutton radius hide-on-mobiles show_content_modal "%>
+      </dl>
+

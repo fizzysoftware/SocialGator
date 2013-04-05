@@ -1,0 +1,30 @@
+<% content_for :title, "Social Profile" %>
+<section class="small_box container add_business">
+  <div class="row">
+    <div class="box seven columns centered">
+        <h3>Add your social profiles</h3>
+      	<div class="field">
+          <% if @business.twitter_token.blank?%>
+    		    <%= link_to "Add Twitter Account", "/auth/twitter", class: "first twitteradd" %>
+          <% else %>  
+            <%= link_to "Remove Twitter Account", {:controller => "businesses",:action => "remove_twitter",:id => @business.id}, class: "first twitterremove" %>
+          <% end %>
+
+          <% if @business.facebook_page_id.blank?%>
+    		    <%= link_to "Add Facebook Account", edit_user_business_path(current_user, @business), class: "right facebookadd" %>
+          <% else %>  
+            <%= link_to "Remove Facebook Account", {:controller => "businesses",:action => "remove_facebook",:id => @business.id}, class: "right facebookremove" %>
+          <% end %>  
+  		</div>
+  
+    </div><!--six columns-->
+  </div>
+
+  <div class="row">
+
+    <div class="three columns centered">
+      <%= link_to "Go back to your profile.", user_path(current_user), class: "button nice  medium themebutton radius" %>
+    </div>
+  </div>
+  </div><!--row-->
+</section><!--container-->

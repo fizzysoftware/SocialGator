@@ -1,0 +1,106 @@
+<% content_for :title, "Edit Business" %>
+<section class="small_box container add_business">
+  <div class="row">
+    <div class="box seven theform columns centered">
+      <% provide(:box_title, "Edit business") %>
+      <%= form_for([current_user, @business], html: {class: "nice business_form clearfix"}) do |f| %>
+  <h3><%= yield(:box_title)%></h3>
+  <%= render "shared/error_messages", object: f.object %>
+
+  <div class="field">
+    <%= f.label :business_name %>
+    <%= f.text_field :business_name, class: "large input-text" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description, class: "large input-text" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :photo, "Cover Photo" %>
+    <%= f.file_field :photo %>
+  </div>
+  
+  <div class="block keywords_block clearfix" >
+    <%= f.label :keywords %>
+    <%= f.fields_for :keywords do |keyword_form| %>
+      <%= render "keyword", :f => keyword_form %>  
+    <% end %>
+   
+   <%= link_to_add_fields("+", f, :keywords) %>
+  </div><!--block-->
+  
+    <div class="field">
+      <%= f.label :facebook_page, "Facebook Page" %>
+      <%= f.select("facebook_page_id", current_user.facebook_pages.collect {|page| [ page.facebook_page_name, page.id ] }, {:prompt => 'Select Facebook Page'},{:class => 'select_width'}) %>
+    </div>
+
+  <div class="actions eight columns centered">
+    <%= f.submit "Save And Continue", class: "button themebutton large radius nice" %>
+  </div>
+
+  <div class="field delete_block clearfix">
+    <%= link_to "Delete", [@user, @business], method: :delete, confirm: "Are you sure?", class: "button red radius ten columns" %>
+    <span>Attention! This action is not reversible</span>
+  </div>
+<% end %>
+
+
+    </div><!--six columns-->
+  </div><!--row-->
+</section><!--container-->
+
+
+<script>
+jQuery(document).ready(function($) {
+  function update_time(elem, hour, minutes) {
+    $(elem).val(hour + ":" + minutes)
+  }
+
+  var existing_keywords = "";
+  $(".keywords_block .input-text").each(function()  {
+    existing_keywords += ($(this).val() + ", ")
+  })
+  
+  $("#keyword_field").val(existing_keywords)
+
+
+
+  $(".select_time").each(function() {
+    var time = $(this).find(".post_time_field").val()
+    var h = time.split(":")[0]
+    var min = time.split(":")[1]
+    //alert(h + "=" + min)
+    $(this).find("#date_hour").val(h)
+    $(this).find("#date_minute").val(min)
+  })
+
+  $("select").change(function() {
+    id = $(this).attr("id")
+    elem = $(this).parents(".select_time").find(".post_time_field")
+    if(id === "date_hour")  {
+      var h = $(this).val()
+      var min = $(elem).val().split(":")[1]
+      update_time(elem, h, min)
+    } else { // update mins
+      var h = $(elem).val().split(":")[0]
+      var min = $(this).val()
+      update_time(elem, h, min)
+    }
+  })
+});
+
+</script>
+
+<script type="text/javascript">
+  $(".remove_field").hide();
+  //var keywords_block = 1;
+  $('.keywords_block a.add_fields').live('click',function(){
+      //keywords_block = keywords_block + 1;
+       $('.keywords_block a.remove_field').show();
+       $('.keywords_block .twelve:last   a.remove_field').hide();
+
+  });
+
+</script>

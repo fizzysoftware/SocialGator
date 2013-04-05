@@ -1,0 +1,28 @@
+  <%= form_for(@user, html: { class: "nice clearfix" }) do |f| %>
+    
+    <h3>Signup<span class="subhead"><%= link_to "Already have an account? Login now.", login_path %></span></h3>
+    <%= render "shared/error_messages", object: f.object %>
+    <div class="field">
+      <%= f.label :username %>
+      <%= f.text_field :username, class: "large input-text", placeholder: "John" %>
+    </div>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.text_field :email, class: "input-text large", placeholder: "john@doe.com" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password, class: "input-text large", placeholder: "Secret password" %>
+    </div>
+  
+    <div class="field">
+      <%= f.label :password_confirmation, "Please enter your password again." %>
+      <%= f.password_field :password_confirmation, class: "input-text large", placeholder: "Secret password" %>
+    </div>
+  
+    
+    <div class="action">
+      <%= f.submit "Signup", class: "button blue medium themebutton nice large left radius" %>
+    </div>
+  <% end %>

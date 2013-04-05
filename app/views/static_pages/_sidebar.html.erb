@@ -1,0 +1,19 @@
+<div class="block row"> 
+  <% if current_user %>
+    
+    <%= link_to "Manage your account", current_user, class: "button themebutton large radius nice" %>
+  <% end%>
+</div><!--row-->
+
+<div class="block row">
+  <h3>Sitemap</h3>
+  <ul>
+    <li><%= link_to "Home", root_path %></li>
+    <li><%= link_to "About", about_path %></li>
+    <li><%= link_to "FAQs", faq_path %></li>
+    <li><%= link_to "Privacy Policy", privacy_path %></li>
+    <li><%= link_to "Terms", toc_path %></li>
+    <li><%= link_to "Disclaimer", "#" %></li>
+    
+  </ul>
+</div> 

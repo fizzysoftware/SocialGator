@@ -1,0 +1,38 @@
+<% if @content.any? %>
+   <div class="content_list clearfix">
+     <p class="row hide-on-mobiles"><span class="helper_text right">Larger images being processed. Please sit tight.</span></p>
+     <% @content.each do |image| %>
+     <% if /(jpg|png|gif)$/.match(image.embed_url) %>
+       <div class="box image_post">
+         <div class="img_wrap">
+           <%= image_tag image.thumbnail_url, class: "thumbnail" %>
+           <span class="large_image_url" style="display: none"><%= image.embed_url %></span>
+         </div><!--img_wrap-->
+         
+         <a href="<%= image.link %>", class="post_link", target="_blank"><h6><%= image.title %></h6></a>
+         <%= link_to "Schedule", "#", class: "small button white nice centered schedule_post radius" %>
+         
+       </div><!--box-->
+     <% end %>
+     <% end %>
+   </div><!--content_list-->
+   <% else %>
+     <div class="no_posts clearfix">
+       <h2>Content is loading. Please wait...</h2>
+     </div>
+   <% end %>
+
+   <div id="img_reveal" class="reveal-modal">
+     <div class="large_image_placeholder_wrap ten columns">
+        <img src="" id="large_image_placeholder" />
+     </div> 
+        <a class="close-reveal-modal">&#215;</a>
+   </div>
+   
+<script>
+  $(function()  {
+    if(window.counter > 5 || $(".box").length > 20)  {
+      $(".helper_text").text("Click on the thumbnails to reveal larger image.")
+    }      
+  })
+</script>

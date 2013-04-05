@@ -1,0 +1,19 @@
+<% content_for :title, "Social Profile" %>
+<section class="small_box container add_business">
+  <div class="row">
+    <div class="box five columns centered">
+        <h3>Add your social profile first</h3>
+      	<div class="field addfacebookpage_paddingleft">
+          <%= link_to "Add Facebook Account", "/auth/facebook", class: "centered facebookadd" %>
+  		</div>
+  
+    </div><!--six columns-->
+  </div>
+
+  <div class="row">
+    <div class="three columns centered">
+      <%= link_to "Go back to your profile.", user_path(current_user), class: "button nice  medium themebutton radius" %>
+    </div>
+  </div>
+  </div><!--row-->
+</section><!--container-->
